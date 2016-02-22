@@ -1,6 +1,9 @@
 <?php
   include('includes/head.php');
 ?>
+  <body>
+
+
     <div class="container">
 
       <div class="content">
@@ -18,6 +21,7 @@
     				echo'<p>Bonjour '.$email_util.' !';
     			}
     		  ?>
+    		  <!-- moteur de recherche	--> 
           <form class="form-inline" role="form" action="recherche.php" method='POST'>
             <div class="form-group">
               <input type="text" class="form-control" id="search" name="search">
@@ -29,35 +33,39 @@
         <div class="row">
         
           <div class="span8">
-          <?php  
-            $reponse = $pdo->query('SELECT * FROM articles;');
-            
-            while ($donnees = $reponse->fetch())
-            {
-		      	  if(isset($connecte) && $connecte == true)
-			       {
-		        		$link = "modif_article.php?id=".$donnees['id'];
-		        		$link2 = "suppr_article.php?id=".$donnees['id'];
-		        		echo '<p id="edit"><a href='.$link.'>Edit </a><a href='.$link2.'>Delete<p/> </a><div class="titre">'.$donnees['titre_article'].'</div>';
-		        		if($donnees['chemin'] != null)
-		        		{
-		        			echo '<center><img src="upload/' . $donnees["chemin"] . '"></center>';
-		        		}
-			         	echo '<div class="cont">'.nl2br($donnees['cont_article']).'</div>';
-            }
-		    	  else
-		    	  {
-			         	echo '<div class="titre">'.$donnees['titre_article'].'</div>';
-			         	if($donnees['chemin'] != null)
-		        		{
-		        			echo '<center><img src="upload/' . $donnees["chemin"] . '"></center>';
-		        		}
-		        		echo '<div class="cont">'.$donnees['cont_article'].'</div>';
-		    	  }
-          }
+          	<?php
 
-          ?>
-          
+				if(isset($_POST['search']) && $_POST['search'] != NULL)
+				{
+					$requete = htmlspecialchars($_POST['search']);
+					$mots = explode( " ", $requete );
+					if( count( $mots ) > 0 ) 
+					{
+					   $query = "SELECT * FROM articles WHERE ";
+					   for( $i = 0; $i < count( $mots ); $i++ ) {
+					      $query .= "titre_article LIKE '%". $mots[$i] ."%' OR cont_article LIKE '%". $mots[$i] ."%' ";
+					      if( $i < count( $mots ) - 1 )
+					      {
+					         $query .= " OR ";
+					      }
+				    	}
+				    }	
+					$query .= " ORDER BY id DESC";
+					$reponse = $pdo->query($query);
+					while ($donnees = $reponse->fetch())
+					{
+				 		echo '<div class="titre">'.$donnees['titre_article'].'</div>';
+			         	if($donnees['chemin'] != null)
+			    		{
+			    			echo '<center><img src="upload/' . $donnees["chemin"] . '"></center>';
+			    		}
+			    		echo '<div class="cont">'.$donnees['cont_article'].'</div>';
+					}
+
+
+				}
+			?>
+          <!-- fin exo moteur de recherche	--> 
           </div>
           
           <nav class="span4">
@@ -92,4 +100,3 @@
 
   </body>
 </html>
-

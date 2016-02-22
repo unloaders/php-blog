@@ -1,31 +1,10 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="utf-8">
-    <title>Mon blog</title>
-    <meta name="description" content="Petit blog pour m'initier à PHP">
-    <meta name="author" content="Jean-philippe Lannoy">
-    <?php
-	  include('includes/pdo.php');
-      include('includes/verif_util.php');
-
-    ?>
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/main.css" rel="stylesheet">
-  </head>
-
 <?php
- 
-	if(isset($_FILES['avatar']))
+    include('includes/head.php');
+	if(isset($_FILES['avatar2']))
 		{ 
 			$dossier = 'upload/';
-			$fichier = basename($_FILES['avatar']['name']);
-			if(move_uploaded_file($_FILES['avatar']['tmp_name'], $dossier . $fichier)) 
+			$fichier = basename($_FILES['avatar2']['name']);
+			if(move_uploaded_file($_FILES['avatar2']['tmp_name'], $dossier . $fichier)) 
 			{
 				echo 'Upload effectué avec succès !';
 			}
@@ -35,21 +14,15 @@
 			}
 		}          
 	if(isset($_GET['id']))
-		    { 
-				$id = $_GET['id'];
-				$reponse = $pdo->query('SELECT * FROM articles WHERE id='.$id);
-				$donnees = $reponse->fetch();
-			}
-
-          
+	    { 
+			$id = $_GET['id'];
+			$reponse = $pdo->query('SELECT * FROM articles WHERE id='.$id);
+			$donnees = $reponse->fetch();
+		}     
 ?>
   <body>
-
-
-    <div class="container">
-
+  <div class="container">
       <div class="content">
-      
         <div class="page-header well">
           <h1>Mon Blog <small>Pour m'initier à PHP</small></h1>
 		  <?php
@@ -57,61 +30,65 @@
 			{
 				echo'<p>Bonjour '.$email_util.' !';
 			}
-			?>
+		  ?>
         </div>
         
         <div class="row">
 			<div class="span8">
-    <?php  
-		if(isset($connecte) && $connecte == true)
-		{
-		    echo '<div class="span8"><form action="" method="post" enctype="multipart/form-data">
-					<p>Titre de l article : <input type="text" name="title" value="'.$donnees['titre_article'].'"/></p>
-					<p>Contenu article : <textarea name="cont" >'.$donnees['cont_article'].'</textarea></p>
-					<p id="id">id : <input name="id_livre" value="'.$donnees['id'].'"/></p>
-					<p><INPUT type="checkbox" name="check" > Supprimer image ?</p>
-					<p><input type="file" name="avatar" /></p>
-					<input type="submit"/>
-				   </form></div>';
-			if($donnees['chemin'] != null)
-			{
-				echo '<center><img src="upload/' . $donnees["chemin"] . '"></center>';
-			}
-		else
-			{
-				echo "pas d image";
-			}	  
-		}
-		else
-			{
-				echo'<div class="span8"></div>Accès interdit ! Veuillez vous connectez !';
-			}
-
-				
-		  if(isset($_POST['title']) && isset($_POST['cont']))
-		    { 
-				$titre = mysql_real_escape_string($_POST['title']." ");
-				$cont = mysql_real_escape_string($_POST['cont']." ");
-				$img = '';
-				if(isset($_FILES['avatar']))
+		    <?php  
+				if(isset($connecte) && $connecte == true)
 				{
-					$img = $_FILES['avatar']['name'];
-				}	
-				
-				if($titre != '' && $cont != '' && $pdo->exec("UPDATE articles SET titre_article = '$titre', cont_article = '$cont', chemin = '$img' WHERE id = '$id' ") )
-				{		
-					header('Location:index.php');
-					exit();
+				    echo '<div class="span8"><form action="" method="post" enctype="multipart/form-data">
+							<p>Titre de l article : <input type="text" name="title" value="'.$donnees['titre_article'].'"/></p>
+							<p>Contenu article : <textarea name="cont" >'.$donnees['cont_article'].'</textarea></p>
+							<p id="id">id : <input name="id_livre" value="'.$donnees['id'].'"/></p>
+							<p><INPUT type="checkbox" name="check" > Supprimer image ?</p>
+							<p><input type="file" name="avatar2" /></p>
+							<input type="submit"/>
+						   </form></div>';
+					if($donnees['chemin'] != null)
+					{
+						echo '<center><img src="upload/' . $donnees["chemin"] . '"></center>';
+					}
+					else
+					{
+						echo "pas d image";
+					}	  
 				}
 				else
-				{
-				
-					echo "<script>alert(\"Echec Enregistrement\")</script>"; 
-				}
+					{
+						echo'<div class="span8"></div>Accès interdit ! Veuillez vous connectez !';
+					}		
+				if(isset($_POST['title']) && isset($_POST['cont']))
+				    { 
+						$titre = $_POST['title']." ";
+						$cont = $_POST['cont']." ";
+						
+						if(isset($_FILES['avatar2']))
+						{
+							$img = $_FILES['avatar2']['name'];
+							echo'test 1 ';
+						}
+						else if($_POST['check']==true)
+						{
+							echo'test 2 ';
+							$img = null;
+						}	
+						
+						if($titre != '' && $cont != '' && $pdo->exec("UPDATE articles SET titre_article = '$titre', cont_article = '$cont', chemin = '$img' WHERE id = '$id' ") )
+						{		
+							header('Location:index.php');
+							exit();
+						}
+						else
+						{
+						
+							echo "<script>alert(\"Echec Enregistrement\")</script>"; 
+						}
 
-			}
+					}
 
-          ?>    
+		    ?>    
           </div>
 			<nav class="span4">
             <h2>Menu</h2>
@@ -137,10 +114,9 @@
         
       </div>
 
-      <footer>
-        <p>&copy; Nilsine & ULCO 2015</p>
-
-      </footer>
+      <?php
+        include('includes/footer.php');
+      ?>
 
     </div>
 

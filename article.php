@@ -124,10 +124,9 @@
             
           </nav>
 		</div 
-      <footer>
-        <p>&copy; Nilsine & ULCO 2015</p>
-
-      </footer>
+      <?php
+        include('includes/footer.php');
+      ?>
 
   </body>
 </html>
