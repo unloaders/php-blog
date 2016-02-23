@@ -21,36 +21,17 @@
     				echo'<p>Bonjour '.$email_util.' !';
     			}
     		  ?>
-    		  <!-- moteur de recherche	--> 
-          <form class="form-inline" role="form" action="recherche.php" method='POST'>
-            <div class="form-group">
-              <input type="text" class="form-control" id="search" name="search">
-            </div>
-            <button type="submit" class="btn btn-default">Rechercher</button>
-          </form>
+
         </div>
 
         <div class="row">
         
           <div class="span8">
           	<?php
-
-				if(isset($_POST['search']) && $_POST['search'] != NULL)
+				if(isset($_GET['id']) && $_GET['id']!=null)
 				{
-					$requete = htmlspecialchars($_POST['search']);
-					$mots = explode( " ", $requete );
-					if( count( $mots ) > 0 ) 
-					{
-					   $query = "SELECT * FROM articles WHERE ";
-					   for( $i = 0; $i < count( $mots ); $i++ ) {
-					      $query .= "titre_article LIKE '%". $mots[$i] ."%' OR cont_article LIKE '%". $mots[$i] ."%' ";
-					      if( $i < count( $mots ) - 1 )
-					      {
-					         $query .= " OR ";
-					      }
-				    	}
-				    }	
-					$query .= " ORDER BY id DESC";
+					$id = $_GET['id'];
+					$query = "SELECT * FROM articles WHERE id = ".$id;
 					$reponse = $pdo->query($query);
 					while ($donnees = $reponse->fetch())
 					{
@@ -61,11 +42,10 @@
 			    		}
 			    		echo '<div class="cont">'.$donnees['cont_article'].'</div>';
 					}
-
-
 				}
+
 			?>
-          <!-- fin exo moteur de recherche	--> 
+          
           </div>
           
             <?php

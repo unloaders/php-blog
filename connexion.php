@@ -66,14 +66,9 @@
           
           </div>
           
-          <nav class="span4">
-            <h2>Menu</h2>
-            
-            <ul>
-                <li><a href="index.php">Accueil</a></li>
-            </ul>
-            
-          </nav>
+            <?php
+				include('includes/menu.php');
+			?>
         </div>
         
       </div>

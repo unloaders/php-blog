@@ -5,6 +5,8 @@
     <title>Mon blog</title>
     <meta name="description" content="Petit blog pour m'initier à PHP">
     <meta name="author" content="Jean-philippe Lannoy">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+	<script type="text/javascript" src="./assets/js/script.js"></script>
     <?php
       $fic = false;
 	  include('includes/pdo.php');
@@ -105,24 +107,9 @@
           
 			</div>
          
-          <nav class="span4">
-            <h2>Menu</h2>
-            
-            <ul>
-                <li><a href="index.php">Accueil</a></li>
-                <?php
-					if(isset($email_util) && isset($connecte) && $connecte == true)
-					{
-						echo'<li><a href="index.php?dc=true">Déconnexion</a></li>';
-					}
-					else
-					{
-						echo'<li><a href="connexion.php">Connexion</a></li>';
-					}
-				?>
-            </ul>
-            
-          </nav>
+            <?php
+				include('includes/menu.php');
+			?>
 		</div 
       <?php
         include('includes/footer.php');

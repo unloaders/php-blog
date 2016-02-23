@@ -52,25 +52,9 @@
             <input type="submit" value="OK">
           </form> 
           </div>  
-          <nav class="span4">
-            <h2>Menu</h2>
-            
-            <ul>
-                <li><a href="index.php">Accueil</a></li>       
             <?php
-              if(isset($email_util) && isset($connecte) && $connecte == true)
-              {
-                echo'<li><a href="article.php">Rédiger un article</a></li>';
-                echo'<li><a href="index.php?dc=true">Déconnexion</a></li>';
-              }
-              else
-              {
-                echo'<li><a href="connexion.php">Connexion</a></li>';
-              }
-            ?>
-            </ul>
-            
-          </nav>
+				include('includes/menu.php');
+			?>
         </div>
         
       </div>
