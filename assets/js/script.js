@@ -1,12 +1,32 @@
-$( document ).ready(function() {
-	console.log( "ready!" );
-	$('ul').hide(400); // On masque tous les div	
-	$('.span4').hover(function(){
-		if($('ul').is(':visible')){
-			$('ul').hide(400);
-		}else{
-			$('ul').slideUp(800).fadeIn(1000);
-		}
-	});
 
+
+$( document ).ready(function() {
+	$("#button").click(function(){
+		$.ajax({
+			type: 'POST',
+			url: 'action.php',
+			data: 'email='+$("input#email").val(),
+		}).success(function(response){
+		
+				$("#div1").text("Inscription validé");
+			
+		});
+	});
+	console.log( "ready!" );
+	$('.menu').hide(400); // On masque tous les div	
+	$('.span4').mouseover(function(){
+			$('.menu').slideDown(800);
+	});
+	$('.span4').mouseleave(function(){
+			$('.menu').slideUp(800);
+	});
+	
+          
+	  $('#banner-slide').bjqs({
+	    animtype      : 'slide',
+	    height        : 320,
+	    width         : 620,
+	    responsive    : true,
+	    randomstart   : true
+	  });
 });

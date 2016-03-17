@@ -1,6 +1,8 @@
 <?php
   include('includes/head.php');
+
 ?>
+
     <div class="container">
 
       <div class="content">
@@ -27,38 +29,39 @@
         </div>
 
         <div class="row">
-        
           <div class="span8">
           <?php  
+          include('diap.php');
             $reponse = $pdo->query('SELECT * FROM articles;');
-            
+           
             while ($donnees = $reponse->fetch())
             {
 		      	  if(isset($connecte) && $connecte == true)
 			       {
 		        		$link = "modif_article.php?id=".$donnees['id'];
 		        		$link2 = "suppr_article.php?id=".$donnees['id'];
-		        		echo '<p id="edit"><a href='.$link.'>Edit </a><a href='.$link2.'>Delete<p/> </a><div class="titre">'.$donnees['titre_article'].'</div>';
+		        		echo '<li><p id="edit"><a href='.$link.'>Edit </a><a href='.$link2.'>Delete<p/> </a><div class="titre">'.$donnees['titre_article'].'</div>';
 		        		if($donnees['chemin'] != null)
 		        		{
 		        			echo '<center><img src="upload/' . $donnees["chemin"] . '"></center>';
 		        		}
-			         	echo '<div class="cont">'.nl2br($donnees['cont_article']).'</div>';
+			         	echo '<div class="cont">'.nl2br($donnees['cont_article']).'</div></li>';
             }
 		    	  else
 		    	  {
-			         	echo '<div class="titre">'.$donnees['titre_article'].'</div>';
+			         	echo '<li><div class="titre">'.$donnees['titre_article'].'</div>';
 			         	if($donnees['chemin'] != null)
 		        		{
 		        			echo '<center><img src="upload/' . $donnees["chemin"] . '"></center>';
 		        		}
-		        		echo '<div class="cont">'.$donnees['cont_article'].'</div>';
+		        		echo '<div class="cont">'.$donnees['cont_article'].'</div></li>';
 		    	  }
+           
           }
 
           ?>
-          
-          </div>
+          </ul>
+        </div>
             <?php
 				include('includes/menu.php');
 			?>

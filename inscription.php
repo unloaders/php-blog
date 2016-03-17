@@ -42,6 +42,8 @@
             }
           ?>  
         </div>
+        <div id="messageF" class="alert alert-danger" style="display:none"></div>
+        <div id="messageS" class="alert alert-success" style="display:none"></div>
         <div class="row"> 
           <div class="span8">
           <form action="inscription.php" method="post">

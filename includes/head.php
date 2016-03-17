@@ -7,6 +7,8 @@
     <meta name="author" content="Jean-philippe Lannoy">
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 	<script type="text/javascript" src="./assets/js/script.js"></script>
+    <script src="./assets/js/bjqs-1.3.min.js"></script>
+    
     <?php
      include('includes/pdo.php');
      include('includes/verif_util.php');
@@ -18,4 +20,5 @@
     
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/main.css" rel="stylesheet">
+    <link href="assets/css/bjqs.css" rel="stylesheet">
   </head>
