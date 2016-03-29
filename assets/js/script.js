@@ -12,6 +12,7 @@ $( document ).ready(function() {
 			
 		});
 	});
+
 	console.log( "ready!" );
 	$('.menu').hide(400); // On masque tous les div	
 	$('.span4').mouseover(function(){
@@ -29,4 +30,18 @@ $( document ).ready(function() {
 	    responsive    : true,
 	    randomstart   : true
 	  });
+
+
+	 function ajout(id,nb)
+	 {
+		$.ajax({
+			type: 'POST',
+			url: 'actionlike.php',
+			data: 'id='+id+'&nb='+nb,
+		}).success(function(response){
+		
+				$("#div1").text("Inscription validé");
+			
+		});
+	 } 
 });

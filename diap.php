@@ -1,10 +1,10 @@
 <div id="conteneur">
-	<ul class="bjqs">
+	<ul class="bjqs" >
   <script class="secret-source">
     jQuery(document).ready(function($) {
 
       $('#conteneur').bjqs({
-        height      : 1020,
+        height      : 620,
         width       : 620,
         responsive  : true
       });
